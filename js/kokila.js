@@ -9,8 +9,6 @@ function kkInit(wrapperId)
 			</span>\
 			<span class="kk-loading"></span>\
 			<audio preload="metadata">\
-				<source src="https://archive.org/download/MBVCASkypeDiscussionRathupamaSuttaFeb102017/MBVCA_Skype%20Discussion_Rathu%CC%84pama_Sutta_Feb%2010_2017.ogg" type="audio/ogg">\
-				<source src="https://archive.org/download/MBVCASkypeDiscussionRathupamaSuttaFeb102017/MBVCA_Skype%20Discussion_Rathu%CC%84pama_Sutta_Feb%2010_2017.mp3" type="audio/mpeg">\
 			</audio>\
 			<span class="kk-timeleft"></span>\
 		</span>'
@@ -109,6 +107,7 @@ function progressTime(current, total){
 
 }
 
-function addSource(wrapperId, url, type){
-	var audio = $("#" + wrapper + " audio").get(0);
+function kkAddSource(wrapperId, url, type){
+	var audio = $("#" + wrapperId + " audio").get(0);
+	$(audio).append('<source src="' + url + '" type="audio/' + type + '" />')
 }
