@@ -15,7 +15,7 @@
 	cursor: default;
 }
 
-#kk-playtoggle {
+.kk-playtoggle {
 	position: absolute;
 	top: 9px;
 	left: 10px;
@@ -25,15 +25,15 @@
 	cursor: pointer;
 }
 
-#kk-playtoggle.playing {
+.kk-playtoggle.playing {
 	background-position: 0 0;
 }
 
-#kk-playtoggle:active {
+.kk-playtoggle:active {
 	top: 10px;
 }
 
-#kk-gutter {
+.kk-gutter {
 	position: absolute;
 	top: 19px;
 	left: 50px;
@@ -54,7 +54,7 @@
 	box-shadow: 0 1px 4px rgba(20, 30, 40, .75) inset, 0 1px 0 rgba(176, 187, 198, .5);
 }
 
-#kk-handle {
+.kk-handle {
 	position: absolute;
 	top: -5px;
 	left: 0;
@@ -102,7 +102,7 @@
 }
 
 
-#kk-gutter {
+.kk-gutter {
 	right: 100px;
 }
 

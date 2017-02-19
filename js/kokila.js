@@ -3,12 +3,12 @@ function kkInit(wrapperId)
 	var wrapper = "#" + wrapperId;
 	$(wrapper).append(
 		'<span class="kk-player">\
-			<span id="kk-playtoggle"></span>\
-			<span id="kk-gutter" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">\
-				<span id="kk-handle" class="ui-slider-handle"></span>\
+			<span class="kk-playtoggle"></span>\
+			<span class="kk-gutter" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">\
+				<span class="kk-handle" class="ui-slider-handle"></span>\
 			</span>\
 			<span class="kk-loading"></span>\
-			<audio preload="metadata" id="kk-audio">\
+			<audio preload="metadata">\
 				<source src="https://archive.org/download/MBVCASkypeDiscussionRathupamaSuttaFeb102017/MBVCA_Skype%20Discussion_Rathu%CC%84pama_Sutta_Feb%2010_2017.ogg" type="audio/ogg">\
 				<source src="https://archive.org/download/MBVCASkypeDiscussionRathupamaSuttaFeb102017/MBVCA_Skype%20Discussion_Rathu%CC%84pama_Sutta_Feb%2010_2017.mp3" type="audio/mpeg">\
 			</audio>\
@@ -18,10 +18,14 @@ function kkInit(wrapperId)
 
 	var audio = $(wrapper + " audio").get(0);
 	var timeleft = $(wrapper + " .kk-timeleft").get(0);
-	var loadingIndicator = $('.kk-player .kk-loading').get(0);
+	var loadingIndicator = $(wrapper + ' .kk-loading').get(0);
+	var playToggle = $(wrapper + ' .kk-playtoggle').get(0);
+	var gutter = $(wrapper + ' .kk-gutter').get(0);
+	var handle = $(wrapper + ' .kk-handle').get(0);
+
 	var manualSeek = false;
 	var loaded = false;
-	var positionIndicator = $('.kk-player #kk-handle');
+	var positionIndicator = $(handle);
 
 	var duration = "";
 	var durationHrs = 0;
@@ -40,17 +44,17 @@ function kkInit(wrapperId)
 
 	$(audio).bind('loadedmetadata', function() {
 		$(timeleft).text(progressTime(0, audio.duration));
-		$('.kk-player #kk-gutter').width($(wrapper).width - $(timeleft).width() - 50);
+		$(gutter).width($(wrapper).width - $(timeleft).width() - 50);
 	});
 	
 
 	$(audio).bind('play',function() {
-	  $("#kk-playtoggle").addClass('playing');
+	  $(playToggle).addClass('playing');
 	}).bind('pause ended', function() {
-	  $("#kk-playtoggle").removeClass('playing');
+	  $(playToggle).removeClass('playing');
 	});
 
-	$("#kk-playtoggle").click(function() {
+	$(playToggle).click(function() {
 	  if (audio.paused) { audio.play(); }
 	  else { audio.pause(); }
 	});
@@ -69,7 +73,7 @@ function kkInit(wrapperId)
 	  if (!loaded) {
 	    loaded = true;
 
-	    $('.kk-player #kk-gutter').slider({
+	    $(gutter).slider({
 	      value: 0,
 	      step: 0.01,
 	      orientation: "horizontal",
