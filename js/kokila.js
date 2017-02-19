@@ -1,7 +1,9 @@
-function kkInit(wrapperId)
+function kkInit(wrapperId, title)
 {
 	var wrapper = "#" + wrapperId;
-	$(wrapper).append(
+	if(title != undefined)
+		$(wrapper).append('<span class="title">' + title + '</span>')
+		$(wrapper).append(
 		'<span class="kk-player">\
 			<span class="kk-playtoggle"></span>\
 			<span class="kk-gutter" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">\
