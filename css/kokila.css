@@ -106,18 +106,7 @@
 	right: 100px;
 }
 
-
-.player a.popup {
-	position: absolute;
-	top: 9px;
-	right: 8px;
-	width: 32px;
-	height: 30px;
-	overflow: hidden;
-	text-indent: -999px;
-	background: url(assets/player.png) no-repeat -90px 0;
+.kk-download{
+	float: right;
 }
 
-.player a.popup:active {
-	background-position: -90px 1px;
-}

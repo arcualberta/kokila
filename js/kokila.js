@@ -13,7 +13,8 @@ function kkInit(wrapperId, title)
 			<audio preload="metadata">\
 			</audio>\
 			<span class="kk-timeleft"></span>\
-		</span>'
+		</span>\
+		<span class="kk-download" style="display:none">Download: </span>'
 		);
 
 	var audio = $(wrapper + " audio").get(0);
@@ -23,7 +24,6 @@ function kkInit(wrapperId, title)
 	var gutter = $(wrapper + ' .kk-gutter').get(0);
 	var handle = $(wrapper + ' .kk-handle').get(0);
 
-	var manualSeek = false;
 	var loaded = false;
 	var positionIndicator = $(handle);
 
@@ -44,7 +44,21 @@ function kkInit(wrapperId, title)
 
 	$(audio).bind('loadedmetadata', function() {
 		$(timeleft).text(progressTime(0, audio.duration));
-		$(gutter).width($(wrapper).width - $(timeleft).width() - 50);
+		loaded = true;
+	    $(gutter).slider({
+	      value: 0,
+	      step: 0.01,
+	      orientation: "horizontal",
+	      range: "min",
+	      max: audio.duration,
+	      animate: true,
+	      slide: function(e,ui) {
+	        audio.currentTime = ui.value;
+	      },
+	      stop:function(e,ui) {
+	        audio.currentTime = ui.value;
+	      }
+	    });
 	});
 	
 
@@ -67,28 +81,8 @@ function kkInit(wrapperId, title)
 	  pos = (audio.currentTime / audio.duration) * 100,
 	  mins = Math.floor(rem/60,10),
 	  secs = rem - mins*60;
-	  //timeleft.text('-' + mins + ':' + (secs > 9 ? secs : '0' + secs));
 
-	  if (!manualSeek) { positionIndicator.css({left: pos + '%'}); }
-	  if (!loaded) {
-	    loaded = true;
-
-	    $(gutter).slider({
-	      value: 0,
-	      step: 0.01,
-	      orientation: "horizontal",
-	      range: "min",
-	      max: audio.duration,
-	      animate: true,
-	      slide: function() {
-	        manualSeek = true;
-	      },
-	      stop:function(e,ui) {
-	        manualSeek = false;
-	        audio.currentTime = ui.value;
-	      }
-	    });
-	  }
+	  positionIndicator.css({left: pos + '%'});
 
 	});
 }
@@ -109,7 +103,15 @@ function progressTime(current, total){
 
 }
 
-function kkAddSource(wrapperId, url, type){
+function kkAddSource(wrapperId, url, type, allowDownload){
 	var audio = $("#" + wrapperId + " audio").get(0);
 	$(audio).append('<source src="' + url + '" type="audio/' + type + '" />')
+
+	if(allowDownload){
+		var download = $("#" + wrapperId + ' .kk-download').get(0);
+		$(download).html($(download).html() + ' <a href="'+url+'" download>'+type+'</a>');
+		$(download).show();
+
+	}
+		
 }
